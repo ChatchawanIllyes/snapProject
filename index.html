@@ -1,32 +1,81 @@
-<!doctype html>
-<html>
-  <head>
-    <title>LA TV Shows | Home</title>
-    <meta name="description" content="A Catalog of Shows Set in Los Angeles" />
-    <link rel="stylesheet" href="style.css" />
-    <script type="text/javascript" src="scripts.js"></script>
-  </head>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>IMPROVE.</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
 
-  <body>
-    <header class="main-header">
-      <h1 class="title">LA TV Shows</h1>
-    </header>
-    <div id="card-container"></div>
-    <div class="card" style="display: none">
-      <div class="card-content">
-        <h2>TV Show Title</h2>
-        <img src="" alt="TV Show Poster" />
-        <ul>
-          <li>Bullet Point 1</li>
-          <li>Bullet Point 2</li>
-          <li>Bullet Point 3</li>
-          <li>Testing Testing</li>
-        </ul>
+  <nav class="site-nav">
+    <div class="nav-logo">IMPROVE.</div>
+    <input
+      class="search-input"
+      id="search-input"
+      type="text"
+      placeholder="Search achievements..."
+      oninput="searchAchievements(this.value)"
+    />
+  </nav>
+
+  <!-- Add bar — title, category, difficulty only (description + result go in panel) -->
+  <div class="add-bar">
+    <input id="add-title" type="text" placeholder="Achievement title"
+      onkeydown="if(event.key==='Enter') addAchievement()" />
+    <select id="add-category">
+      <option value="fitness">Fitness</option>
+      <option value="academic">Academic</option>
+      <option value="entertainment">Entertainment</option>
+      <option value="career">Career</option>
+    </select>
+    <input id="add-difficulty" type="number" min="1" max="10" placeholder="Difficulty 1–10" />
+    <button class="btn-add" onclick="addAchievement()">+ ADD</button>
+  </div>
+
+  <!-- Legend row — sits between add bar and tree, always visible -->
+  <div class="legend">
+    <div class="legend-item"><div class="legend-dot" style="background:#111111"></div>Fitness</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#444444"></div>Academic</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#777777"></div>Entertainment</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#AAAAAA"></div>Career</div>
+  </div>
+
+  <main class="tree-main" id="tree-main">
+    <p class="tree-empty-msg">Add your first achievement above to grow the tree.</p>
+    <svg id="tree-svg" preserveAspectRatio="xMidYMin meet"></svg>
+  </main>
+
+  <div id="side-panel" class="side-panel hidden">
+    <button class="panel-close" onclick="closePanel()">✕</button>
+    <span class="panel-category" id="panel-category"></span>
+    <h2 id="panel-title"></h2>
+    <div class="panel-meta">
+      <span id="panel-date"></span>
+      <span id="panel-difficulty"></span>
+    </div>
+    <p class="panel-desc" id="panel-description"></p>
+    <div class="panel-result-box">
+      <span class="panel-result-label">RESULT</span>
+      <p id="panel-result"></p>
+    </div>
+    <button class="btn-remove" onclick="removeSelected()">Remove Achievement</button>
+  </div>
+
+  <section class="catalog-section">
+    <div class="catalog-header">
+      <span class="catalog-title">ALL ACHIEVEMENTS</span>
+      <div class="catalog-nav">
+        <button class="catalog-btn" onclick="scrollCatalog(-1)">←</button>
+        <button class="catalog-btn" onclick="scrollCatalog(1)">→</button>
       </div>
     </div>
-    <div class="footer">
-      <button onclick="quoteAlert()">Get A Quote!</button>
-      <button onclick="removeLastCard()">Remove A Card!</button>
+    <div class="catalog-track" id="catalog-track">
+      <p class="catalog-empty">No achievements yet.</p>
     </div>
-  </body>
+  </section>
+
+  <script src="scripts.js"></script>
+</body>
 </html>
