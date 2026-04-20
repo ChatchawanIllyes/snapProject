@@ -151,3 +151,81 @@ const achievements = [
     image: null
   }
 ];
+
+//colors for each node depending on type
+const colors = {
+  fitness: '#111111',
+  academic: '#444444',
+  entertainment: '#777777',
+  career: '#AAAAAA'
+};
+
+//hardcoded positions for nodes
+const positions = [
+  {x: 500, y: 590},
+  {x: 238, y: 460},
+  {x: 768, y: 442},
+  {x: 108, y: 322},
+  {x: 362, y: 298},
+  {x: 645, y: 318},
+  {x: 888, y: 302},
+  {x: 48,  y: 182},
+  {x: 175, y: 158},
+  {x: 295, y: 178},
+  {x: 452, y: 155},
+  {x: 548, y: 183},
+  {x: 675, y: 160},
+  {x: 825, y: 175},
+  {x: 955, y: 158},
+  {x: 22,  y: 38},
+  {x: 90,  y: 25},
+  {x: 148, y: 42},
+  {x: 222, y: 30},
+  {x: 272, y: 45},
+  {x: 338, y: 28}
+
+];
+
+//connections for eah node
+const connections = [
+    [0,1],  [0,2],
+    [1,3],  [1,4],
+    [2,5],  [2,6],
+    [3,7],  [3,8],
+    [4,9],  [4,10],
+    [5,11], [5,12],
+    [6,13], [6,14],
+    [7,15], [7,16],
+    [8,17], [8,18],
+    [9,19], [9,20]
+  ];
+
+  function drawLines() 
+  {
+    let html = '';
+    for(let i = 0; i < connections.length; i++)
+    {
+      const fromPoint = connections[i][0];
+      const toPoint = connections[i][1];
+      if (fromPoint < achievements.length && toPoint < achievements) 
+      {
+        //x & y positions for both connecting nodes
+        const pointX1 = positions[fromPoint].x;
+        const pointY1 = positions[fromPoint].y;
+
+        const pointX2 = positions[toPoint].x;
+        const pointY2 = positions[toPoint].y;
+
+        html += `<line pointX1="${pointX1}" pointY1"="${pointY1}" pointX2="${pointX2}" pointY2="${pointY2}"
+        stroke = "#DADADA"
+        stroke-width = "1.5/>`;
+
+
+        
+      }
+    }
+    return html;
+  }
+
+  
+
