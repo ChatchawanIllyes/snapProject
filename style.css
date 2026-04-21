@@ -19,7 +19,9 @@
 }
 
 body {
-  background: var(--bg);
+  background-color: var(--bg);
+  background-image: radial-gradient(circle, #C8C8C8 1px, transparent 1px);
+  background-size: 24px 24px;
   color: var(--text);
   font-family: 'Inter', sans-serif;
   overflow-x: hidden;
@@ -122,9 +124,9 @@ body {
 /* ── Legend ── */
 .legend {
   position: fixed;
-  top: var(--header-h);
+  top: calc(var(--nav-h) + var(--bar-h));
   left: 0; right: 0;
-  z-index: 98;
+  z-index: 101;
   height: var(--legend-h);
   background: var(--bg);
   border-bottom: 1px solid var(--border);
@@ -183,6 +185,15 @@ body {
   width: 100%;
   max-width: 1100px;
   display: block;
+}
+
+.tree-node {
+  cursor: pointer;
+  transition: r 0.15s ease;
+}
+
+.tree-node:hover {
+  r: 10;
 }
 
 /* ── Side Panel ── */
@@ -246,6 +257,40 @@ body {
   gap: 4px;
   font-size: 0.72rem;
   color: var(--muted);
+}
+
+.panel-edit {
+  width: 100%;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  padding: 8px 10px;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.8rem;
+  line-height: 1.6;
+  color: var(--text);
+  border-radius: 3px;
+  resize: vertical;
+  outline: none;
+  transition: border-color 0.2s;
+  min-height: 70px;
+}
+
+.panel-edit:focus { border-color: #999; }
+.panel-edit::placeholder { color: var(--dim); }
+
+.difficulty-bar-track {
+  width: 100%;
+  height: 4px;
+  background: var(--border);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.difficulty-bar-fill {
+  height: 100%;
+  background: var(--text);
+  border-radius: 2px;
+  transition: width 0.3s ease;
 }
 
 .panel-desc {
@@ -335,6 +380,20 @@ body {
 }
 
 .catalog-btn:hover { color: var(--text); border-color: #999; }
+
+#catalog-body {
+  display: flex;
+  flex-direction: column;
+  gap: 36px;
+}
+
+.catalog-group-label {
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
 
 .catalog-track {
   display: flex;

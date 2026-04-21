@@ -20,7 +20,6 @@
     />
   </nav>
 
-  <!-- Add bar — title, category, difficulty only (description + result go in panel) -->
   <div class="add-bar">
     <input id="add-title" type="text" placeholder="Achievement title"
       onkeydown="if(event.key==='Enter') addAchievement()" />
@@ -34,7 +33,6 @@
     <button class="btn-add" onclick="addAchievement()">+ ADD</button>
   </div>
 
-  <!-- Legend row — sits between add bar and tree, always visible -->
   <div class="legend">
     <div class="legend-item"><div class="legend-dot" style="background:#111111"></div>Fitness</div>
     <div class="legend-item"><div class="legend-dot" style="background:#444444"></div>Academic</div>
@@ -50,15 +48,21 @@
   <div id="side-panel" class="side-panel hidden">
     <button class="panel-close" onclick="closePanel()">✕</button>
     <span class="panel-category" id="panel-category"></span>
+    <div id="panel-image" style="display:none">
+      <img id="panel-img-tag" style="width:100%; border-radius:3px;" />
+    </div>
     <h2 id="panel-title"></h2>
     <div class="panel-meta">
       <span id="panel-date"></span>
       <span id="panel-difficulty"></span>
+      <div class="difficulty-bar-track">
+        <div class="difficulty-bar-fill" id="panel-difficulty-bar" style="width: 0%"></div>
+      </div>
     </div>
-    <p class="panel-desc" id="panel-description"></p>
+    <textarea class="panel-edit" id="panel-description" placeholder="Add a description..." oninput="saveField('description', this.value)"></textarea>
     <div class="panel-result-box">
       <span class="panel-result-label">RESULT</span>
-      <p id="panel-result"></p>
+      <textarea class="panel-edit" id="panel-result" placeholder="Add a result..." oninput="saveField('result', this.value)"></textarea>
     </div>
     <button class="btn-remove" onclick="removeSelected()">Remove Achievement</button>
   </div>
@@ -66,12 +70,8 @@
   <section class="catalog-section">
     <div class="catalog-header">
       <span class="catalog-title">ALL ACHIEVEMENTS</span>
-      <div class="catalog-nav">
-        <button class="catalog-btn" onclick="scrollCatalog(-1)">←</button>
-        <button class="catalog-btn" onclick="scrollCatalog(1)">→</button>
-      </div>
     </div>
-    <div class="catalog-track" id="catalog-track">
+    <div id="catalog-body">
       <p class="catalog-empty">No achievements yet.</p>
     </div>
   </section>

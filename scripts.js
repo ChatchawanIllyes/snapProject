@@ -16,7 +16,7 @@ const achievements = [
     date: "2023-04-10",
     category: "fitness",
     difficulty: 6,
-    description: "Officially hit one plate!.",
+    description: "Officially hit one plate!",
     result: "Consistency gives the best results",
     image: null
   },
@@ -186,7 +186,7 @@ const positions = [
 
 ];
 
-//connections for eah node
+//connections for each node
 const connections = [
     [0,1],  [0,2],
     [1,3],  [1,4],
@@ -207,7 +207,7 @@ const connections = [
     {
       const fromPoint = connections[i][0];
       const toPoint = connections[i][1];
-      if (fromPoint < achievements.length && toPoint < achievements) 
+      if (fromPoint < achievements.length && toPoint < achievements.length) 
       {
         //x & y positions for both connecting nodes
         const pointX1 = positions[fromPoint].x;
@@ -216,9 +216,7 @@ const connections = [
         const pointX2 = positions[toPoint].x;
         const pointY2 = positions[toPoint].y;
 
-        html += `<line pointX1="${pointX1}" pointY1"="${pointY1}" pointX2="${pointX2}" pointY2="${pointY2}"
-        stroke = "#DADADA"
-        stroke-width = "1.5/>`;
+        html += `<line x1="${pointX1}" y1="${pointY1}" x2="${pointX2}" y2="${pointY2}" stroke="#DADADA" stroke-width="1.5"/>`;
 
 
         
@@ -227,5 +225,208 @@ const connections = [
     return html;
   }
 
-  
+  //function to create the nodes by taking x and y position and then finding the color depending on type of achievement
+  function drawNodes() 
+  {
+    let html = '';
+    for(let i = 0; i < achievements.length; i++)
+    {
+      const centerX = positions[i].x;
+      const centerY = positions[i].y;
+      const color = colors[achievements[i].category];
+      html += `<circle cx="${centerX}" cy="${centerY}" r="7" fill="${color}" class="tree-node" data-id="${i}" onclick="openCard(${i})"/>`;
+    }
+    return html;
+  }
 
+  function render() {
+    const svg = document.getElementById('tree-svg');
+    //tells the svg that its space goes from 0 to 1000 wide and 0 to 630 height
+    svg.setAttribute('viewBox', '0 0 1000 630');
+    svg.innerHTML = drawLines() + drawNodes();
+    renderCatalog();
+    const emptyMsg = document.querySelector('.tree-empty-msg');
+    emptyMsg.style.display = achievements.length === 0 ? 'block' : 'none';
+  }
+
+  render();
+  let selectId = null;
+
+  function openCard(index)
+  {
+    //looks up achievement based on position in the array
+    const achievement = achievements[index];
+
+    //stores which node is open, so then removeSelect() knows which node to delete
+    selectId = index;
+
+    const categoryColor = colors[achievement.category];
+    document.getElementById('side-panel').style.borderLeftColor = categoryColor;
+    document.getElementById('side-panel').style.borderLeftWidth = '3px';
+
+    document.getElementById('panel-title').textContent = achievement.title;
+    document.getElementById('panel-category').textContent = achievement.category;
+    document.getElementById('panel-date').textContent = achievement.date;
+    document.getElementById('panel-difficulty').textContent = 'Difficulty: ' + achievement.difficulty + ' / 10';
+    document.getElementById('panel-difficulty-bar').style.width = (achievement.difficulty / 10 * 100) + '%';
+    document.getElementById('panel-description').value = achievement.description;
+    document.getElementById('panel-result').value = achievement.result;
+    const imageBox = document.getElementById('panel-image');
+    const imgTag   = document.getElementById('panel-img-tag');
+    if (achievement.image) {
+      imgTag.src             = achievement.image;
+      imageBox.style.display = 'block';
+    } else {
+      imageBox.style.display = 'none';
+    }
+
+    document.getElementById('side-panel').classList.remove('hidden');
+    document.getElementById('tree-main').classList.add('panel-open');
+
+
+  }
+
+  function closePanel() 
+  {
+    document.getElementById('side-panel').classList.add('hidden');
+    document.getElementById('tree-main').classList.remove('panel-open');
+    selectId = null;
+  }
+
+  //saves description or result back to the achievements array as user types
+  function saveField(field, value)
+  {
+    if (selectId === null) return;
+    achievements[selectId][field] = value;
+    renderCatalog();
+  }
+
+  //displays all the info for the catalog below the tree, grouped by category
+  function renderCatalog()
+  {
+    const body = document.getElementById('catalog-body');
+    const categories = ['fitness', 'academic', 'entertainment', 'career'];
+
+    if (achievements.length === 0)
+    {
+      body.innerHTML = '<p class="catalog-empty">No achievements yet.</p>';
+      return;
+    }
+
+    let html = '';
+    for (let c = 0; c < categories.length; c++)
+    {
+      const cat = categories[c];
+      const catColor = colors[cat];
+      const filtered = [];
+
+      for (let i = 0; i < achievements.length; i++)
+      {
+        if (achievements[i].category === cat) filtered.push(achievements[i]);
+      }
+
+      if (filtered.length === 0) continue;
+
+      html += `<div class="catalog-group">`;
+      html += `<div class="catalog-group-label" style="color: ${catColor}">${cat}</div>`;
+      html += `<div class="catalog-track">`;
+
+      for (let i = 0; i < filtered.length; i++)
+      {
+        const achievement = filtered[i];
+        html += `
+          <div class="catalog-card" style="--card-accent: ${catColor}">
+            <div class="card-title">${achievement.title}</div>
+            <div class="card-image-placeholder"></div>
+            <div class="card-meta">${achievement.date} · Difficulty ${achievement.difficulty}/10</div>
+            <div class="card-body">${achievement.description}</div>
+            <div class="card-result">
+              <span class="card-result-label">RESULT</span>
+              <p>${achievement.result}</p>
+            </div>
+          </div>
+        `;
+      }
+
+      html += `</div></div>`;
+    }
+
+    body.innerHTML = html;
+  }
+
+  function addAchievement() 
+  {
+    const title = document.getElementById('add-title').value.trim();
+    const category = document.getElementById('add-category').value;
+    const difficulty = parseInt(document.getElementById('add-difficulty').value)
+
+    if (title === '')
+    {
+      return;
+    }
+
+    if (difficulty < 1 || difficulty > 10)
+    {
+      return;
+    }
+
+    const newAchievement = {
+      id: achievements.length,
+      title: title,
+      category: category,
+      difficulty: difficulty,
+      date: new Date().toISOString().slice(0, 10),
+      description: '',
+      result: '',
+      image: null
+    };
+
+    achievements.push(newAchievement);
+
+    document.getElementById('add-title').value = '';
+    document.getElementById('add-difficulty').value = '';
+    render();
+
+  }
+
+  //remove node function
+  function removeSelected() 
+  {
+    if (selectId === null)
+    {
+      return;
+    }
+
+    achievements.splice(selectId, 1);
+
+    closePanel();
+    render();
+  }
+  
+  //function to search for achievement
+  function searchAchievements(query)
+  {
+    const nodes = document.querySelectorAll('.tree-node');
+
+    for (let i = 0; i < nodes.length; i++)
+    {
+      const title = achievements[i].title.toLocaleLowerCase();
+      const search = query.toLocaleLowerCase();
+    
+
+    if (query === '')
+    {
+      nodes[i].setAttribute('opacity', '1');
+
+    } else if (title.includes(search))
+    {
+      nodes[i].setAttribute('opacity', '1');
+
+    } else
+    {
+      nodes[i].setAttribute('opacity', '0.15');
+    }
+  }
+}
+
+  
