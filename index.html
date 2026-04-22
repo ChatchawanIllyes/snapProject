@@ -48,9 +48,6 @@
   <div id="side-panel" class="side-panel hidden">
     <button class="panel-close" onclick="closePanel()">✕</button>
     <span class="panel-category" id="panel-category"></span>
-    <div id="panel-image" style="display:none">
-      <img id="panel-img-tag" style="width:100%; border-radius:3px;" />
-    </div>
     <h2 id="panel-title"></h2>
     <div class="panel-meta">
       <span id="panel-date"></span>
@@ -63,6 +60,9 @@
     <div class="panel-result-box">
       <span class="panel-result-label">RESULT</span>
       <textarea class="panel-edit" id="panel-result" placeholder="Add a result..." oninput="saveField('result', this.value)"></textarea>
+    </div>
+    <div id="panel-image" style="display:none">
+      <img id="panel-img-tag" style="width:100%; border-radius:3px;" />
     </div>
     <button class="btn-remove" onclick="removeSelected()">Remove Achievement</button>
   </div>

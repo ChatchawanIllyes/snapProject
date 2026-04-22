@@ -8,7 +8,7 @@ const achievements = [
     difficulty: 5,
     description: "Committed to consistent gym training for the first time, dude PPLA. (Push, pull, legs, arms)",
     result: "Built a lasting training habit within the first month.",
-    image: null
+    image: "images/snapGym.webp"
   },
   {
     id: 1,
@@ -18,7 +18,7 @@ const achievements = [
     difficulty: 6,
     description: "Officially hit one plate!",
     result: "Consistency gives the best results",
-    image: null
+    image: "images/snap135.webp"
   },
   {
     id: 2,
@@ -28,7 +28,7 @@ const achievements = [
     difficulty: 8,
     description: "Accepted into my school's PALS program to aid kids that are struggling with coursework and life.",
     result: "Become someone that can be looked up to, like a role model.",
-    image: null
+    image: "images/snapPals.png"
   },
   {
     id: 3,
@@ -38,7 +38,7 @@ const achievements = [
     difficulty: 5,
     description: "Self-taught HTML, CSS, and JavaScript to build a personal portfolio site.",
     result: "First proof I could ship something real.",
-    image: null
+    image: "images/snapFirstSite.png"
   },
   {
     id: 4,
@@ -48,7 +48,7 @@ const achievements = [
     difficulty: 7,
     description: "Engineered an Azure pipeline to automate MLS data processing and built an appointment scheduling system.",
     result: "Enabled faster release of 5000+ property listings and increased client conversion rate by 8%.",
-    image: null
+    image: "images/snapAmeriplex.png"
   },
   {
     id: 5,
@@ -58,7 +58,7 @@ const achievements = [
     difficulty: 8,
     description: "Developed a C#/.NET desktop app streaming VR content across multiple headsets and designed 360° adaptive bitrate streaming on Meta Quest.",
     result: "Reduced monthly cloud cost overages by 30%.",
-    image: null
+    image: "images/snapMeta.webp"
   },
   {
     id: 6,
@@ -68,7 +68,7 @@ const achievements = [
     difficulty: 8,
     description: "Focused on a structured progressive overload program with disciplined nutrition to build mass.",
     result: "Gained 20 lbs of lean muscle. Biggest physical transformation to date.",
-    image: null
+    image: "images/snapGain.png"
   },
   {
     id: 7,
@@ -78,7 +78,7 @@ const achievements = [
     difficulty: 9,
     description: "Built a data-driven solution for a social impact problem at JP Morgan's challenge.",
     result: "Won first place.",
-    image: null
+    image: "images/snapJPMorgan.png"
   },
   {
     id: 8,
@@ -88,7 +88,7 @@ const achievements = [
     difficulty: 7,
     description: "Self-taught Swift and iOS development to build and ship native mobile applications.",
     result: "Expanded skillset into mobile, opened a new lane for projects.",
-    image: null
+    image: "images/snapFirstIOS.png"
   },
   {
     id: 9,
@@ -98,7 +98,7 @@ const achievements = [
     difficulty: 9,
     description: "Two-plate bench press, years in the making.",
     result: "Hit 225 lbs for a clean rep. Biggest strength milestone yet.",
-    image: null
+    image: "images/snap225.jpg"
   },
   {
     id: 10,
@@ -108,7 +108,7 @@ const achievements = [
     difficulty: 9,
     description: "Authored a Physics-Informed Neural Network proposal for NASA's Lunar Gateway and designed a transfer learning pipeline for ISS Li-ion battery telemetry.",
     result: "Delivered technical scope to NASA reviewers across a 12-member interdisciplinary team.",
-    image: null
+    image: "images/snapNasa.png"
   },
   {
     id: 11,
@@ -118,7 +118,7 @@ const achievements = [
     difficulty: 4,
     description: "Designed and deployed a personal portfolio site, learning how to host and manage deployments with Vercel.",
     result: "Live portfolio accessible anywhere, a home for all my projects.",
-    image: null
+    image: "images/snapPortfolio.png"
   },
   {
     id: 12,
@@ -128,7 +128,7 @@ const achievements = [
     difficulty: 7,
     description: "Competed at HackRice, building an AI-powered finance application under hackathon time pressure.",
     result: "Gained hands-on experience shipping a real AI finance app in a competitive environment.",
-    image: null
+    image: "images/snapHackRice.png"
   },
   {
     id: 13,
@@ -138,7 +138,7 @@ const achievements = [
     difficulty: 8,
     description: "Created MavMarket, a marketplace for University of Texas at Arlington students to buy and sell coursework materials and items.",
     result: "Built a real product solving a real need for my university community.",
-    image: null
+    image: "images/snapMavMarket.png"
   },
   {
     id: 14,
@@ -148,7 +148,7 @@ const achievements = [
     difficulty: 7,
     description: "Led technical demos using EC2, S3, Lambda, and RDS to teach 50+ members cloud computing concepts and organized AWS certification study sessions.",
     result: "Grew the club's technical depth and helped members work toward AWS certifications.",
-    image: null
+    image: "images/snapAWS.webp"
   }
 ];
 
@@ -337,7 +337,9 @@ const connections = [
         html += `
           <div class="catalog-card" style="--card-accent: ${catColor}">
             <div class="card-title">${achievement.title}</div>
-            <div class="card-image-placeholder"></div>
+            <div class="card-image-placeholder">
+              ${achievement.image ? `<img src="${achievement.image}" />` : ''}
+            </div>
             <div class="card-meta">${achievement.date} · Difficulty ${achievement.difficulty}/10</div>
             <div class="card-body">${achievement.description}</div>
             <div class="card-result">
